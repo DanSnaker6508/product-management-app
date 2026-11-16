@@ -44,3 +44,106 @@ function logout() {
     window.location.href =
         "login.html";
 }
+
+const API =
+"https://product-management-app-f22b.onrender.com/api/products";
+
+async function cargarProductos() {
+
+    const token =
+        localStorage.getItem("token");
+
+    const response = await fetch(API,{
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+    });
+
+    const products =
+        await response.json();
+
+    const container =
+        document.getElementById("products");
+
+    container.innerHTML = "";
+
+    products.forEach(product => {
+
+        container.innerHTML += `
+        <div class="card">
+            <h3>${product.name}</h3>
+            <p>${product.description}</p>
+            <p>$${product.price}</p>
+            <p>Stock: ${product.stock}</p>
+
+            <button onclick="eliminarProducto('${product._id}')">
+                Eliminar
+            </button>
+        </div>
+        `;
+
+    });
+
+}
+
+async function crearProducto() {
+
+    const token =
+        localStorage.getItem("token");
+
+    await fetch(API, {
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json",
+            Authorization:`Bearer ${token}`
+        },
+
+        body:JSON.stringify({
+
+            name:
+            document.getElementById("name").value,
+
+            description:
+            document.getElementById("description").value,
+
+            price:
+            document.getElementById("price").value,
+
+            stock:
+            document.getElementById("stock").value
+
+        })
+
+    });
+
+    cargarProductos();
+
+}
+
+async function eliminarProducto(id){
+
+    const token =
+        localStorage.getItem("token");
+
+    await fetch(`${API}/${id}`,{
+
+        method:"DELETE",
+
+        headers:{
+            Authorization:`Bearer ${token}`
+        }
+
+    });
+
+    cargarProductos();
+
+}
+
+if(
+window.location.pathname
+.includes("dashboard")
+){
+    cargarProductos();
+}

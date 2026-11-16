@@ -2,16 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Gestión de Productos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
 
-    <h1>Bienvenido</h1>
+    <h1>Gestión de Productos</h1>
 
-    <p>Autenticación JWT Exitosa</p>
+    <div class="formulario">
+
+        <input type="text" id="name" placeholder="Nombre">
+
+        <input type="text" id="description" placeholder="Descripción">
+
+        <input type="number" id="price" placeholder="Precio">
+
+        <input type="number" id="stock" placeholder="Stock">
+
+        <button onclick="crearProducto()">
+            Agregar Producto
+        </button>
+
+    </div>
+
+    <hr>
+
+    <div id="products"></div>
 
     <button onclick="logout()">
         Cerrar Sesión
