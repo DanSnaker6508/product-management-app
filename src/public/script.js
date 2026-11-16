@@ -4,7 +4,7 @@ async function login() {
     const password = document.getElementById("password").value;
 
     const response = await fetch(
-        "http://localhost:5000/api/auth/login",
+    "/api/auth/login",
         {
             method: "POST",
             headers: {
@@ -45,8 +45,7 @@ function logout() {
         "login.html";
 }
 
-const API =
-"https://product-management-app-f22b.onrender.com/api/products";
+const API = "/api/products";
 
 async function cargarProductos() {
 
