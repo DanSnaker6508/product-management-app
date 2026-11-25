@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
+const exchangeRoutes = require("./routes/exchangeRoutes");
 const path = require("path");
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/exchange", exchangeRoutes);
 
 app.get("/", (req, res) => {
     res.redirect("/login.html");

@@ -1,8 +1,9 @@
 const express = require("express");
-
 const router = express.Router();
 
 const authMiddleware = require("../middleware/authMiddleware");
+const authorizeRole = require("../middleware/roleMiddleware");
+const validateProduct = require("../validators/productValidator");
 
 const {
     getProducts,
@@ -11,14 +12,38 @@ const {
     deleteProduct
 } = require("../controllers/productController");
 
-router.use(authMiddleware);
+// Todos los usuarios autenticados pueden consultar
+router.get(
+    "/",
+    authMiddleware,
+    authorizeRole("admin", "user"),
+    getProducts
+);
 
-router.get("/", getProducts);
+// Solo administradores pueden crear
+router.post(
+    "/",
+    authMiddleware,
+    authorizeRole("admin"),
+    validateProduct,
+    createProduct
+);
 
-router.post("/", createProduct);
+// Solo administradores pueden actualizar
+router.put(
+     "/:id",
+     authMiddleware,
+     authorizeRole("admin"),
+     validateProduct,
+     updateProduct
+ );
 
-router.put("/:id", updateProduct);
-
-router.delete("/:id", deleteProduct);
+// Solo administradores pueden eliminar
+router.delete(
+     "/:id",
+     authMiddleware,
+     authorizeRole("admin"),
+     deleteProduct
+ );
 
 module.exports = router;
