@@ -58,8 +58,11 @@ async function cargarProductos() {
         }
     });
 
-    const products =
-        await response.json();
+    const data =
+    await response.json();
+
+const products =
+    data.products || data;
 
     const container =
         document.getElementById("products");
