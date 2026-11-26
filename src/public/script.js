@@ -140,6 +140,13 @@ async function eliminarProducto(id){
 
 }
 
+if (
+    window.location.pathname.includes("dashboard") &&
+    !localStorage.getItem("token")
+) {
+    window.location.href = "login.html";
+}
+
 if(
 window.location.pathname
 .includes("dashboard")
